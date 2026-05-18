@@ -1,8 +1,8 @@
 // Example-1: If condition
 
-let age:number=30;
+let age1:number=30;
 
-if (age>18){
+if (age1>18){
     console.log("You are eligible for vote!!");
 }
 

@@ -1,13 +1,13 @@
-let a:number=20,b:number=10;
+let aa:number=20,bb:number=10;
 
 // Arithmetic Operartor
 
 console.log("******** Arithmetic Operartors ***********")
-console.log(a+b);
-console.log(a-b);
-console.log(a*b);
-console.log(a/b);
-console.log(a%b);
+console.log(aa+bb);
+console.log(aa-bb);
+console.log(aa*bb);
+console.log(aa/bb);
+console.log(aa%bb);
 console.log(10**2);
 
 // Assignment Operartor
