@@ -1,0 +1,168 @@
+These TypeScript function concepts are very important in real-time Playwright automation frameworks.
+
+Below are practical Playwright automation scenarios for each function type.
+
+# 1. Named Function with No Parameter and No Return Type
+
+# Taking screenshot after failure.
+
+async function captureScreenshot(): Promise<void> {
+    console.log("Capturing screenshot...");
+
+    await page.screenshot({
+        path: 'failure.png'
+    });
+}
+
+# 2. Named Function with Parameters and Return Type
+
+# Get page title and return boolean validation.
+
+async function verifyTitle(
+    expectedTitle: string
+): Promise<boolean> {
+
+    const actualTitle = await page.title();
+
+    return actualTitle === expectedTitle;
+}
+const status = await verifyTitle("Dashboard");
+console.log(status);
+
+# 3. Named Function with Rest Parameters
+
+# Verify multiple menu items.
+
+async function verifyMenus(
+    ...menuNames: string[]
+): Promise<void> {
+
+    for (const menu of menuNames) {
+
+        await expect(
+            page.locator(`text=${menu}`)
+        ).toBeVisible();
+    }
+}
+await verifyMenus(
+    "Home",
+    "Profile",
+    "Settings",
+    "Logout"
+);
+
+# 4. Rest Parameters with Multiple Types
+
+# Search functionality accepting:
+
+async function searchProduct(
+    ...searchValues: (number | string)[]
+): Promise<void> {
+
+    for (const value of searchValues) {
+
+        await page.fill(
+            '#search',
+            value.toString()
+        );
+
+        await page.keyboard.press('Enter');
+    }
+}
+
+await searchProduct(
+    101,
+    "iPhone",
+    205,
+    "Laptop"
+);
+
+# 5. Optional Parameters
+
+# Login function with optional OTP.
+
+async function login(
+    username: string,
+    password: string,
+    otp?: string
+): Promise<void> {
+
+    await page.fill('#username', username);
+
+    await page.fill('#password', password);
+
+    if (otp !== undefined) {
+
+        await page.fill('#otp', otp);
+    }
+
+    await page.click('#loginBtn');
+}
+await login("admin", "admin123");
+await login(
+    "admin",
+    "admin123",
+    "567890"
+);
+
+# 6. Default Parameters
+
+# Launch browser with default timeout.
+
+async function launchApplication(
+    timeout: number = 30000
+): Promise<void> {
+
+    await page.goto(
+        "https://example.com",
+        {
+            timeout
+        }
+    );
+}
+await launchApplication();
+await launchApplication(60000);
+
+
+---
+
+# Most Common Function Types Used in Playwright Frameworks
+
+| Function Type   | Real-Time Usage   |
+| --------------- | ----------------- |
+| Parameters      | dynamic test data |
+| Return types    | validations       |
+| Optional params | flexible methods  |
+| Default params  | timeout/browser   |
+| Rest params     | multiple elements |
+
+---
+
+# Example Real-Time Framework Utility
+
+```ts id="pted1g"
+async function verifyElements(
+    timeout:number = 5000,
+    ...locators:string[]
+): Promise<void> {
+
+    for (const locator of locators) {
+
+        await expect(
+            page.locator(locator)
+        ).toBeVisible({
+            timeout
+        });
+    }
+}
+```
+
+Usage:
+
+```ts id="4ph5z7"
+await verifyElements(
+    10000,
+    '#login',
+    '#search',
+    '#logout'
+);
